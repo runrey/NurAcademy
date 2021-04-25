@@ -21,6 +21,6 @@ urlpatterns = [
     path('grappelli/', include('grappelli.urls')), # nothing interesting, just module for better administration
     path('admin/', admin.site.urls),
     path('Constructor/', include('Constructor.urls')),
-    path('Courses/', include('Courses.urls')),
+    path('', include('Courses.urls')),
     path('Moderating/', include('Moderating.urls')),
 ]

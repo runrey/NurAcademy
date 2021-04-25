@@ -1,18 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>NurAcademy</title>
-	<link rel="shortcut icon" href="img/favicon.png">
+	<link rel="shortcut icon" href="{% static 'courses/img/favicon.png' %}">
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'courses/css/style.css' %}">
 </head>
 <body>
 	<main>
+
 		<header>
 			<div class="header-normal">
 				<div class="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -79,7 +81,7 @@
 		    				<div id="courses-bottom">
 		    					<span id="courses-price">5 000 &#8376;</span>
 									<a href="course.php?course=1&trem=1">Перейти к курсу</a>
-									<a href="login.php" name="purchase">Купить</a>
+									<a href="{% url 'login' %}" name="purchase">Купить</a>
 		    				</div>    					
 		    			</div>
 		    		</div>
@@ -100,6 +102,6 @@
 
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-	<script src="js/custom.js"></script>
+	<script src="{% static 'courses/js/custom.js' %}"></script>
 </body>
 </html>

@@ -4,12 +4,8 @@ from . import models
 
 
 def index(request):
-    ss = models.Course.objects.all()
-    ans = ''
-    for i in ss:
-        ans += str(i) + '<br><br>'
-    print(ans)
+    return render(request, template_name='index.html')
 
-    return HttpResponse(ans)
-
+def login(request):
+    return render(request, template_name='login.html')
 
