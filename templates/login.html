@@ -11,7 +11,7 @@
 </head>
 <body>
 	<form data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000" id="login" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-		<a href="index.php" title="Go to home:)" class="logo">Logo</a>
+		<a href="{% url 'index' %}" title="Go to home:)" class="logo">Logo</a>
 
 		<label>Введите ваш email:</label>
 		<input type="email" name="email" placeholder="Email" autofocus value="" required>
@@ -22,7 +22,7 @@
 		<?php include('errors.php'); ?>
 
 		<input type="submit" name="submit" value="Войти">
-		<p>Нет аккаунта? <a href="sign.php" title="Регистрация" class="link">Зарегистрироваться</a></p>
+		<p>Нет аккаунта? <a href="{% url 'sign' %}" title="Регистрация" class="link">Зарегистрироваться</a></p>
 		<p><a class="link" href="passchange.php">Забыли пароль?</a></p>
 
 	</form>

@@ -9,3 +9,6 @@ def index(request):
 def login(request):
     return render(request, template_name='login.html')
 
+def sign(request):
+    return render(request, template_name='sign.html')
+
