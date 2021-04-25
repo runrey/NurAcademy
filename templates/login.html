@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Вход</title>
+	<link rel="shortcut icon" href="{% static 'courses/img/favicon.png' %}">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'courses/css/login.css' %}">
+</head>
+<body>
+	<form data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000" id="login" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<a href="index.php" title="Go to home:)" class="logo">Logo</a>
+
+		<label>Введите ваш email:</label>
+		<input type="email" name="email" placeholder="Email" autofocus value="" required>
+
+		<label>Введите ваш пароль:</label>
+		<input type="password" name="pass" placeholder="Пароль" title="Пароль должен быть более 7 символов и содержать заглавные буквы" required>
+
+		<?php include('errors.php'); ?>
+
+		<input type="submit" name="submit" value="Войти">
+		<p>Нет аккаунта? <a href="sign.php" title="Регистрация" class="link">Зарегистрироваться</a></p>
+		<p><a class="link" href="passchange.php">Забыли пароль?</a></p>
+
+	</form>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script>
+		AOS.init();
+	</script>
+</body>
+</html>
