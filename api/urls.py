@@ -10,4 +10,5 @@ urlpatterns = [
     path('user-create/', views.UserCreate, name='user-create'),
     path('user-update/<str:pk>', views.UserUpdate, name='user-update'),
     path('user-delete/<str:pk>', views.UserDelete, name='user-delete'),
+    path('login/', views.Login, name='login'),
 ]

@@ -10,7 +10,8 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'courses/css/login.css' %}">
 </head>
 <body>
-	<form data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000" id="login" method="POST" action="">
+	<form data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000" id="login" method="POST" action="{% url 'apis:login' %}">
+        {% csrf_token %}
 		<a href="{% url 'index' %}" title="Go to home:)" class="logo">Logo</a>
 
 		<label>Введите ваш email:</label>

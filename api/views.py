@@ -41,7 +41,7 @@ def UserCreate(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-    response = redirect('apis:user-list')
+    response = redirect('login')
     return response
 
 
@@ -62,8 +62,16 @@ def UserUpdate(request, pk):
 
 @api_view(['DELETE'])
 def UserDelete(request, pk):
-    user = user.objects.get(id=pk)
+    user = User.objects.get(id=pk)
     user.delete()
     return Response("Item deleted!")
 
 
+@api_view(['POST'])
+def Login(request):
+    m = User.objects.get(Email=request.POST['email'])
+    if m.Password == request.POST['pass']:
+        request.session['email'] = m.Email
+        return HttpResponse("You're logged in.")
+    else:
+        return HttpResponse("Your username and password didn't match.")
