@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import User
 
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
@@ -47,7 +46,6 @@ def UserCreate(request):
 
 @api_view(['POST'])
 def UserUpdate(request, pk):
-
     user = User.objects.get(id=pk)
     serializer = UserSerializer(instance=user, data=request.data)
 
@@ -72,7 +70,20 @@ def Login(request):
     m = User.objects.get(Email=request.POST['email'])
     if m.Password == request.POST['pass']:
         request.session['email'] = m.Email
-        request.session['username'] = m.Password
-        return HttpResponse("You're logged in.")
+        request.session['username'] = m.Username
+        response = redirect('index')
+        return response
     else:
-        return HttpResponse("Your username and password didn't match.")
+        response = redirect('login')
+        return response
+
+
+@api_view(['GET'])
+def Logout(request):
+    try:
+        del request.session['email']
+        del request.session['username']
+    except KeyError:
+        pass
+    response = redirect('index')
+    return response

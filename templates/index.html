@@ -31,25 +31,28 @@
 				</div>
 				<span class="header-normal-logo" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000"><a href="{% url 'index' %}" title="Go to home:)" class="logo">Logo</a></span>
 
-                {% if request.session == null %}
+
                 <div class="header-mobile-right">
+                     {% if request.session.email == null %}
 						<a class="mlinks" href="login">Login</a>
 						<a class="mlinks" href="sign">Signup</a>
-				</div>
-                {% endif %}
-                {% if request.session != null %}
-
+                    {% endif %}
+                    {% if request.session.email != null %}
+                        <a class="mlinks">{{ request.session.username }}</a>
 						<a class="mlinks" href="profile.php">Мой профиль</a>
 						<a class="mlinks" href="courses.php">Мои курсы</a>
-						<a class="mlinks" href="index.php?logout">Выйти</a>
+						<a class="mlinks" href="{% url 'apis:logout' %}">Выйти</a>
                 {% endif %}
+				</div>
+
+
 
 				<div class="header-normal-right" data-aos="zoom-in-left" data-aos-delay="600" data-aos-duration="1000">
-                        {% if request.session == null %}
+                        {% if request.session.email == null %}
 						<div class="header-normal-right-back"><a id="subs" href="login">Подписка на курсы</a></div>
                         {% endif %}
-                        {% if request.session != null %}
-                        <div class="menu-login"><?php echo $_SESSION['name']; ?><i class="fa fa-sign-in" aria-hidden="true"></i></div>
+                        {% if request.session.email != null %}
+                        <div class="menu-login">{{ request.session.username }}<i class="fa fa-sign-in" aria-hidden="true"></i></div>
                         {% endif %}
 				</div>
 
@@ -96,7 +99,12 @@
 		    				<div id="courses-bottom">
 		    					<span id="courses-price">5 000 &#8376;</span>
 									<a href="courses">Перейти к курсу</a>
+                                    {% if request.session.email == null %}
 									<a href="login" name="purchase">Купить</a>
+                                    {% endif %}
+                                    {% if request.session.email != null %}
+                                        <a href="purchase?course=id" name="purchase">Купить</a>
+                                    {% endif %}
 		    				</div>    					
 		    			</div>
 		    		</div>
