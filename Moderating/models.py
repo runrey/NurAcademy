@@ -1,5 +1,6 @@
 from django.db import models
 from Courses.models import Course
+# from Courses.models import User, UserCourse, Course, Module
 
 
 class Moderator(models.Model):
