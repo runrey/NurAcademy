@@ -30,13 +30,29 @@
 					<a class="hlinks" href="#ex3">Контакты</a>	
 				</div>
 				<span class="header-normal-logo" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000"><a href="{% url 'index' %}" title="Go to home:)" class="logo">Logo</a></span>
-				<div class="header-mobile-right">
+
+                {% if request.session == null %}
+                <div class="header-mobile-right">
 						<a class="mlinks" href="login">Login</a>
 						<a class="mlinks" href="sign">Signup</a>
 				</div>
+                {% endif %}
+                {% if request.session != null %}
+
+						<a class="mlinks" href="profile.php">Мой профиль</a>
+						<a class="mlinks" href="courses.php">Мои курсы</a>
+						<a class="mlinks" href="index.php?logout">Выйти</a>
+                {% endif %}
+
 				<div class="header-normal-right" data-aos="zoom-in-left" data-aos-delay="600" data-aos-duration="1000">
+                        {% if request.session == null %}
 						<div class="header-normal-right-back"><a id="subs" href="login">Подписка на курсы</a></div>
+                        {% endif %}
+                        {% if request.session != null %}
+                        <div class="menu-login"><?php echo $_SESSION['name']; ?><i class="fa fa-sign-in" aria-hidden="true"></i></div>
+                        {% endif %}
 				</div>
+
 				<div class="menu-loginm"><i class="fa fa-sign-in" aria-hidden="true"></i></div>
 			</div>
 		</header>

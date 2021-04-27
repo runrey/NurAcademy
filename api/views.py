@@ -72,6 +72,7 @@ def Login(request):
     m = User.objects.get(Email=request.POST['email'])
     if m.Password == request.POST['pass']:
         request.session['email'] = m.Email
+        request.session['username'] = m.Password
         return HttpResponse("You're logged in.")
     else:
         return HttpResponse("Your username and password didn't match.")
