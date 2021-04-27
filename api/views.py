@@ -64,7 +64,6 @@ def UserUpdate(request, pk):
 def UserDelete(request, pk):
     user = user.objects.get(id=pk)
     user.delete()
-
     return Response("Item deleted!")
 
 
