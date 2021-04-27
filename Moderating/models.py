@@ -4,7 +4,7 @@ from Courses.models import Course
 
 
 class Moderator(models.Model):
-    Login = models.CharField('User\'s name', max_length=20)
+    Login = models.CharField('User\'s name', max_length=20, unique=True)
     Password = models.CharField('User password', max_length=30)
     courses = models.ManyToManyField(Course)
 

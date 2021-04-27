@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Course(models.Model):
-    Title = models.CharField('Title', max_length=100)
+    Title = models.CharField('Title', max_length=100, unique=True)
     Description = models.TextField('Description')
     textChoices = [('AC', 'active'), ('IA', 'inactive'), ('MO', 'modifying')]
     Status = models.CharField('Status', max_length=2, choices=textChoices, default='IA')
@@ -13,7 +13,7 @@ class Course(models.Model):
 
 class User(models.Model):
     Username = models.CharField('User\'s name', max_length=20)
-    Email = models.EmailField('User email', max_length=255)
+    Email = models.EmailField('User email', max_length=255, unique=True)
     Password = models.CharField('User password', max_length=30)
     Courses = models.ManyToManyField(Course, through='UserCourse')
 
