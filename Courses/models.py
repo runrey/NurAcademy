@@ -26,6 +26,12 @@ class UserCourse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     Action = models.BooleanField('Created')
 
+    def __str__(self):
+        kk = 'enrolled'
+        if self.Action:
+            kk = 'Created'
+        return self.course.Title + ' ' + self.user.Username + ' ' + kk
+
 
 class Module(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)

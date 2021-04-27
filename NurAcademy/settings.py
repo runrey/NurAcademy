@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'Constructor',
     'Courses',
     'Moderating',
+    'rest_framework',
+    'api'
 ]
 
 MIDDLEWARE = [
