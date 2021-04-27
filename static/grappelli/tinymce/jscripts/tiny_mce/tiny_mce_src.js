@@ -774,7 +774,7 @@ tinymce.create('tinymce.util.Dispatcher', {
 			else
 				outPath = base.slice(0, i).join('/') + '/' + o.reverse().join('/');
 
-			// Add front / if it's needed
+			// Add moderating / if it's needed
 			if (outPath.indexOf('/') !== 0)
 				outPath = '/' + outPath;
 
@@ -3223,7 +3223,7 @@ tinymce.html.Styles = function(settings, schema) {
 				if (value = matches[6]) { // End element
 					value = value.toLowerCase();
 
-					// IE will add a ":" in front of elements it doesn't understand like custom elements or HTML5 elements
+					// IE will add a ":" in moderating of elements it doesn't understand like custom elements or HTML5 elements
 					if (isIE && invalidPrefixRegExp.test(value))
 						value = value.substr(1);
 
@@ -3231,7 +3231,7 @@ tinymce.html.Styles = function(settings, schema) {
 				} else if (value = matches[7]) { // Start element
 					value = value.toLowerCase();
 
-					// IE will add a ":" in front of elements it doesn't understand like custom elements or HTML5 elements
+					// IE will add a ":" in moderating of elements it doesn't understand like custom elements or HTML5 elements
 					if (isIE && invalidPrefixRegExp.test(value))
 						value = value.substr(1);
 
@@ -9364,7 +9364,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 			} else if (is(r.item) || is(r.htmlText)) {
 				// IE will produce invalid markup if elements are present that
 				// it doesn't understand like custom elements or HTML5 elements.
-				// Adding a BR in front of the contents and then remoiving it seems to fix it though.
+				// Adding a BR in moderating of the contents and then remoiving it seems to fix it though.
 				e.innerHTML = '<br>' + (r.item ? r.item(0).outerHTML : r.htmlText);
 				e.removeChild(e.firstChild);
 			} else

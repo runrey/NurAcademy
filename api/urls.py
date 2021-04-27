@@ -4,11 +4,20 @@ from . import views
 app_name = 'apis'
 
 urlpatterns = [
-    path('', views.apiOverview, name='api'),
     path('user-list/', views.UserList, name='user-list'),
+    path('course-list/', views.CourseList, name='course-list'),
+
     path('user-detail/<str:pk>', views.UserDetail, name='user-detail'),
+    path('course-detail/<str:pk>', views.CourseDetail, name='course-detail'),
+
     path('user-create/', views.UserCreate, name='user-create'),
+    path('course-create/', views.CourseCreate, name='course-create'),
+
     path('user-update/<str:pk>', views.UserUpdate, name='user-update'),
+    path('course-update/<str:pk>', views.CourseUpdate, name='course-update'),
+
     path('user-delete/<str:pk>', views.UserDelete, name='user-delete'),
+    path('course-delete/<str:pk>', views.CourseDelete, name='course-delete'),
+
     path('login/', views.Login, name='login'),
 ]

@@ -6487,7 +6487,7 @@ S2.define('select2/selection/stopPropagation',[
         // properties with normalized deltas.
         event.deltaMode = 0;
 
-        // Add event and delta to the front of the arguments
+        // Add event and delta to the moderating of the arguments
         args.unshift(event, delta, deltaX, deltaY);
 
         // Clearout lowestDelta after sometime to better
