@@ -19,8 +19,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('grappelli/', include('grappelli.urls')), # nothing interesting, just module for better administration
+    path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
     path('Constructor/', include('Constructor.urls')),
     path('', include('Courses.urls')),
     path('Moderating/', include('Moderating.urls')),
+    path('api/', include('api.urls')),
 ]

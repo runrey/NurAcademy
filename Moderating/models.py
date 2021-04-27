@@ -7,3 +7,6 @@ class Moderator(models.Model):
     Password = models.CharField('User password', max_length=30)
     courses = models.ManyToManyField(Course)
 
+    def __str__(self):
+        return self.Login
+
