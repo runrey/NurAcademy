@@ -11,6 +11,18 @@ from .serializers import UserSerializer, CourseSerializer, UserCourseSerializer
 
 
 @api_view(['GET'])
+def apiOverview(request):
+    api_urls = {
+        'User List': 'user-list',
+        'User view': '/user-detail/<str:pk>',
+        'Create user': '/user-create/',
+        'Update user': '/user-update/<str:pk>/',
+        'Delete user': '/user-delete/<str:pk>/',
+    }
+    return Response(api_urls)
+
+
+@api_view(['GET'])
 def UserList(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
@@ -128,9 +140,21 @@ def Login(request):
     if m.Password == request.POST['pass']:
         request.session['email'] = m.Email
         request.session['username'] = m.Username
-        return HttpResponse("You're logged in.\n"+ "Welcome there, "+request.session['username'])
+        response = redirect('index')
+        return response
     else:
-        return HttpResponse("Your username and password didn't match.")
+        response = redirect('login')
+        return response
 
+
+@api_view(['GET'])
+def Logout(request):
+    try:
+        del request.session['email']
+        del request.session['username']
+    except KeyError:
+        pass
+    response = redirect('index')
+    return response
 
 
