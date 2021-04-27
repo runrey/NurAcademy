@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import User, UserCourse, Course
 
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
@@ -156,5 +155,3 @@ def Logout(request):
         pass
     response = redirect('index')
     return response
-
-

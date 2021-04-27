@@ -22,4 +22,5 @@ urlpatterns = [
     path('course-delete/<str:pk>', views.CourseDelete, name='course-delete'),
 
     path('login/', views.Login, name='login'),
+    path('logout/', views.Logout, name='logout'),
 ]
