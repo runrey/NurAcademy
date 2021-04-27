@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'Courses',
     'Moderating',
     'rest_framework',
-
+    'api'
 ]
 
 MIDDLEWARE = [
