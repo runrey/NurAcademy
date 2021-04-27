@@ -1,5 +1,4 @@
 {% load static %}
-{#{% load crsf %}#}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,20 +10,30 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'courses/css/login.css' %}">
 </head>
 <body>
-	<form data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000" id="sign" method="POST" action="{% url 'apis:user-create' %}">{% csrf_token %}
-{#		{% crsf_token %}#}
-        <a href="{% url 'index' %}" title="Go to home:)" class="logo">Logo</a>
+	<form data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000" id="sign" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<a href="{% url 'index' %}" title="Go to home:)" class="logo">Logo</a>
 
-		<label>Введите имя пользователя:</label>
-		<input type="text" name="Username" placeholder="Иван" value="" autocomplete="off" required>
+		<label>Введите ваше имя:</label>
+		<input type="text" name="name" placeholder="Иван" value="<?php echo $name; ?>" autocomplete="off" required>
+
+		<label>Введите вашу фамилию:</label>
+		<input type="text" name="sname" placeholder="Иванов" value="<?php echo $sname; ?>" autocomplete="off" required>
 
 		<label>Введите ваш email:</label>
-		<input type="email" name="Email" placeholder="example@mail.ru" value="" autocomplete="off" required>
+		<input type="email" name="email" placeholder="example@mail.ru" value="<?php echo $email; ?>" autocomplete="off" required>
+
+		<label>Введите ваш номер телефона:</label>
+		<input type="tel" name="tele" placeholder="8-777-123-1212" value="<?php echo $tele; ?>" autocomplete="off" pattern="[8][0-9]{10}"  required>
 
 		<label>Введите ваш пароль:</label>
-		<input type="text" name="Password" placeholder="Пароль" required> {#pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Пароль должен содержать не менее одной цифры и одной прописной и строчной буквы, а также не менее 8 и более символов" autocomplete="off"#}
+		<input type="text" name="pass" placeholder="Пароль" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Пароль должен содержать не менее одной цифры и одной прописной и строчной буквы, а также не менее 8 и более символов" autocomplete="off" required>
 
-		<input type="submit" name="submit">
+		<label>Подтвердите пароль:</label>
+		<input type="text" name="rpass" placeholder="Подтвердите пароль" autocomplete="off" required>
+
+		<?php include('errors.php'); ?>
+
+		<input type="submit" name="submit" value="Зарегистрироваться">
 		<p>Уже есть аккаунт? <a href="{% url 'login' %}" title="Логин" class="link">Войти</a></p>
     
 	</form>
