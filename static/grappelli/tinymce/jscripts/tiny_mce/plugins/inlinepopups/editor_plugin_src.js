@@ -568,10 +568,10 @@
 			}
 		},
 		
-		// Find front most window
+		// Find moderating most window
 		_frontWindow : function() {
 			var fw, ix = 0;
-			// Find front most window and focus that
+			// Find moderating most window and focus that
 			each (this.windows, function(w) {
 				if (w.zIndex > ix) {
 					fw = w;

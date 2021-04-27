@@ -7,10 +7,22 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         # fields = '__all__'
         fields = ['Username', 'Email', 'Password']
+        read_only = ['pk']
 
-        # def create(self, validated_data):
-        #     user = User
-        #     return user
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = '__all__'
+        # fields = ['Title', 'Description', 'Status']
+        read_only = ['pk']
+
+
+class UserCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserCourse
+        # fields = '__all__'
+        fields = ['course', 'user', 'Action']
 
 
 

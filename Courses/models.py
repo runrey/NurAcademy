@@ -24,7 +24,7 @@ class User(models.Model):
 class UserCourse(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    Action = models.BooleanField('Created')
+    Action = models.BooleanField('Created', default=False)
 
     def __str__(self):
         kk = 'enrolled'

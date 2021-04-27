@@ -6489,7 +6489,7 @@ var menu = $.widget( "ui.menu", {
 		this.element
 			.removeAttr( "aria-activedescendant" )
 			.find( ".ui-menu" ).addBack()
-				.removeClass( "ui-menu ui-widget ui-widget-content ui-menu-icons ui-front" )
+				.removeClass( "ui-menu ui-widget ui-widget-content ui-menu-icons ui-moderating" )
 				.removeAttr( "role" )
 				.removeAttr( "tabIndex" )
 				.removeAttr( "aria-labelledby" )
@@ -6620,7 +6620,7 @@ var menu = $.widget( "ui.menu", {
 
 		// Initialize nested menus
 		submenus.filter( ":not(.ui-menu)" )
-			.addClass( "ui-menu ui-widget ui-widget-content ui-front" )
+			.addClass( "ui-menu ui-widget ui-widget-content ui-moderating" )
 			.hide()
 			.attr({
 				role: this.options.role,
@@ -7317,7 +7317,7 @@ $.widget( "ui.autocomplete", {
 		}
 
 		if ( !element || !element[ 0 ] ) {
-			element = this.element.closest( ".ui-front" );
+			element = this.element.closest( ".ui-moderating" );
 		}
 
 		if ( !element.length ) {
@@ -10271,7 +10271,7 @@ var dialog = $.widget( "ui.dialog", {
 
 	_moveToTop: function( event, silent ) {
 		var moved = false,
-			zIndices = this.uiDialog.siblings( ".ui-front:visible" ).map(function() {
+			zIndices = this.uiDialog.siblings( ".ui-moderating:visible" ).map(function() {
 				return +$( this ).css( "z-index" );
 			}).get(),
 			zIndexMax = Math.max.apply( null, zIndices );
@@ -10370,7 +10370,7 @@ var dialog = $.widget( "ui.dialog", {
 
 	_createWrapper: function() {
 		this.uiDialog = $("<div>")
-			.addClass( "ui-dialog ui-widget ui-widget-content ui-corner-all ui-front " +
+			.addClass( "ui-dialog ui-widget ui-widget-content ui-corner-all ui-moderating " +
 				this.options.dialogClass )
 			.hide()
 			.attr({
@@ -10848,7 +10848,7 @@ var dialog = $.widget( "ui.dialog", {
 		}
 
 		// TODO: Remove hack when datepicker implements
-		// the .ui-front logic (#8989)
+		// the .ui-moderating logic (#8989)
 		return !!$( event.target ).closest( ".ui-datepicker" ).length;
 	},
 
@@ -11179,7 +11179,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 
 		// Wrap menu
 		this.menuWrap = $( "<div>", {
-			"class": "ui-selectmenu-menu ui-front"
+			"class": "ui-selectmenu-menu ui-moderating"
 		})
 			.append( this.menu )
 			.appendTo( this._appendTo() );
@@ -11588,7 +11588,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 		}
 
 		if ( !element || !element[ 0 ] ) {
-			element = this.element.closest( ".ui-front" );
+			element = this.element.closest( ".ui-moderating" );
 		}
 
 		if ( !element.length ) {
