@@ -12,3 +12,6 @@ def login(request):
 def sign(request):
     return render(request, template_name='sign.html')
 
+def profile(request):
+    return render(request, template_name='profile.html')
+
