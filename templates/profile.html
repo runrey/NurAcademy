@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Мой профиль</title>
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="shortcut icon" href="{% static 'courses/img/favicon.png' %}">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'courses/css/profile.css' %}">
+</head>
+<body >
+	
+	<main>
+		<header data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+			<div class="header-normal">
+				<span class="header-normal-logo" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000"><a href="{% url 'index' %}" title="Go to home:)">Logo</a></span>
+				<div class="header-mobile-right">
+					<a>Ник</a>
+					<a href="profile">Мой профиль</a>
+					<a href="courses">Мои курсы</a>
+					<a href="{% url 'apis:logout' %}">Выйти</a>
+				</div>
+				<div class="menu-login"><i class="fa fa-sign-in" aria-hidden="true"></i></div>
+			</div>
+		</header>
+		
+		<div class="content" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+			<h1>Мой профиль</h1>
+			<table>
+				<tr>
+					<th>Имя пользователя:</th>
+					<td>{{ request.session.username }}</td>
+				</tr>
+				<tr>
+					<th>Email:</th>
+					<td>{{ request.session.email }}</td>
+				</tr>
+			</table>
+			<!--<div class="links">
+				<span class="link" onclick="profile()">Редактировать профиль</span>
+				<a class="link" href="passchange">Сменить пароль</a>
+			</div>
+
+			<form id="profile" method="POST" action="">
+				<label for="name">Имя:</label>
+				<input type="text" name="name" value="{{ request.session.username }}" autocomplete="off" required>
+
+				<input type="submit" name="profile" value="Сохранить">
+			</form>-->
+		</div>
+
+		<div class="push"></div>
+	</main>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script>
+		AOS.init();
+		$(document).ready(function(){
+			$("#menum").on("click","a", function (event) {
+				event.preventDefault();
+				var id = $(this).attr('href'),
+				top = $(id).offset().top;
+				$('body,html').animate({scrollTop: top}, 800);
+			});
+		});
+
+		$(document).ready(function(){
+			$('.menu-login').click(function(){
+				$('.header-mobile-right').toggleClass('active');
+			})
+		})
+
+		function profile(){
+			document.getElementById('profile').style.display = "flex";
+		}
+	</script>
+</body>
+</html>
