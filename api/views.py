@@ -17,133 +17,171 @@ def apiOverview(request):
         'Create user': '/user-create/',
         'Update user': '/user-update/<str:pk>/',
         'Delete user': '/user-delete/<str:pk>/',
+        'Course List': 'course-list',
+        'Course view': '/course-detail/<str:pk>',
+        'Create course': '/course-create/',
+        'Update course': '/course-update/<str:pk>/',
+        'Delete course': '/course-delete/<str:pk>/',
     }
     return Response(api_urls)
 
 
 @api_view(['GET'])
 def UserList(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
+    try:
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        return HttpResponse(Http404("Users does not exist"))
 
 
 @api_view(['GET'])
 def CourseList(request):
-    courses = Course.objects.all()
-    serializer = CourseSerializer(courses, many=True)
-    return Response(serializer.data)
+    try:
+        courses = Course.objects.all()
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        return HttpResponse(Http404("Poll does not exist"))
 
 
 @api_view(['GET'])
 def UserDetail(request, pk):
-    users = User.objects.get(id=pk)
-    serializer = UserSerializer(users, many=False)
-    return Response(serializer.data)
+    try:
+        users = User.objects.get(id=pk)
+        serializer = UserSerializer(users, many=False)
+        return Response(serializer.data)
+    except Exception as e:
+        return Response(Http404)
 
 @api_view(['GET'])
 def CourseDetail(request, pk):
-    courses = Course.objects.get(id=pk)
-    serializer = CourseSerializer(courses, many=False)
-    return Response(serializer.data)
+    try:
+        courses = Course.objects.get(id=pk)
+        serializer = CourseSerializer(courses, many=False)
+        return Response(serializer.data)
+    except Exception as e:
+        return Response(Http404)
 
 
 @api_view(['POST'])
 def UserCreate(request):
-    serializer = UserSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    response = redirect('login')
-    return response
+    try:
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        response = redirect('login')
+        return response
+    except Exception as e:
+        return Response(Http404)
 
 
 @api_view(['POST'])
 def CourseCreate(request):
-    if request.session['email'] is None:
-        return HttpResponse("You must be logged in first")
-    else:
-        m = User.objects.get(Email=request.session['email'])
+    try:
+        mail = request.session['email']
+        if mail is None:
+            raise Exception
+
+        m = User.objects.get(Email=mail)
         cserializer = CourseSerializer(data=request.data)
+        ans = False
         if cserializer.is_valid():
             cserializer.save()
+            ans = True
 
         usercourse = UserCourse(user_id=m.pk, course_id=cserializer.data['id'], Action=True)
         usercourse.save()
-        return HttpResponse("You succeessfully created Course"+cserializer.data['Title'])
+        return HttpResponse(ans)
+    except Exception as e:
+        return HttpResponse("You must be logged in first")
 
 
 @api_view(['POST'])
 def UserUpdate(request, pk):
-    user = User.objects.get(id=pk)
-    serializer = UserSerializer(instance=user, data=request.data)
+    try:
+        mail = request.session['email']
+        if mail is None or mail != request.email:
+            raise Exception
 
-    if serializer.is_valid():
-        serializer.save()
+        user = User.objects.get(id=pk)
+        serializer = UserSerializer(instance=user, data=request.data)
+        ans = False
+        if serializer.is_valid():
+            ans = True
+            serializer.save()
 
-    response = redirect('apis:user-list')
-    return response
+        return Response(ans)
+    except Exception as e:
+        return Response(Http404)
 
 
 @api_view(['POST'])
 def CourseUpdate(request, pk):
-    if request.session['email'] is None:
+    try:
+        mail = request.session['email']
+        if mail is None:
+            raise Exception
+
+        course = Course.objects.get(id=pk)
+        serializer = CourseSerializer(instance=course, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponse(True)
+        return HttpResponse(False)
+    except Exception as e:
         return HttpResponse("You must be logged in first")
 
-    course = Course.objects.get(id=pk)
-    userID = UserCourse.objects.filter(course=pk, Action=True).values()[0][user_id]
-    user = User.objects.get(id=userID)
-    serializer = CourseSerializer(instance=course, data=request.data)
 
-    if user.Email != request.session['email']:
-        return HttpResponse("You don't have such permission")
-
-    if serializer.is_valid():
-        serializer.save()
-
-    response = redirect('apis:course-list')
-    return response
 
 
 @api_view(['DELETE'])
 def UserDelete(request, pk):
-    if request.session['email'] is None:
-        return HttpResponse("You must be logged in first")
-    user = User.objects.get(id=pk)
+    try:
+        mail = request.session['email']
+        user = User.objects.get(id=pk)
+        if mail is None or user.Email != request.session['email']:
+            raise Exception
+        user.delete()
+        return Response(True)
+    except Exception as e:
+        return Response(Http404)
 
-    if user.Email != request.session['email']:
-        return HttpResponse("You don't have such permission")
-
-    user.delete()
-    return Response("Item deleted!")
 
 
 @api_view(['DELETE'])
 def CourseDelete(request, pk):
-    if request.session['email'] is None:
-        return HttpResponse("You must be logged in first")
+    try:
+        mail = request.session['email']
+        course = Course.objects.get(id=pk)
+        userID = UserCourse.objects.filter(course=pk, Action=True).values()[0]['user_id']
 
-    course = Course.objects.get(id=pk)
-    userID = UserCourse.objects.filter(course=pk, Action=True).values()[0]['user_id']
+        user = User.objects.get(id=userID)
 
-    user = User.objects.get(id=userID)
-    if user.Email != request.session['email']:
-        return HttpResponse("You don't have such permission")
+        if user.Email != mail or mail is None:
+            raise Exception
 
-    course.delete()
-    return Response('Course deleted!')
+        course.delete()
+        return Response('Course deleted!')
+    except Exception as e:
+        return Response(Http404)
 
 
 @api_view(['POST'])
 def Login(request):
-    m = User.objects.get(Email=request.POST['email'])
-    if m.Password == request.POST['pass']:
-        request.session['email'] = m.Email
-        request.session['username'] = m.Username
-        response = redirect('index')
-        return response
-    else:
-        response = redirect('login')
-        return response
+    try:
+        m = User.objects.get(Email=request.POST['email'])
+        if m.Password == request.POST['pass']:
+            request.session['email'] = m.Email
+            request.session['username'] = m.Username
+            response = redirect('index')
+            return response
+        else:
+            response = redirect('login')
+            return response
+    except Exception as e:
+        return Response(Http404)
 
 
 @api_view(['GET'])
