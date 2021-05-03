@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+def moderating(request):
+    return render(request, template_name='moderator/moderating.html')
 
 
