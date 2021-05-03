@@ -12,7 +12,7 @@
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{% static 'courses/css/profile.css' %}">
 </head>
-<body >
+<body>
 	
 	<main>
 		<header data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
@@ -40,17 +40,18 @@
 					<td>{{ request.session.email }}</td>
 				</tr>
 			</table>
-			<!--<div class="links">
+			<div class="links">
 				<span class="link" onclick="profile()">Редактировать профиль</span>
-				<a class="link" href="{% url 'passchange' %}">Сменить пароль</a>
+				<a class="link" href="passchange">Сменить пароль</a>
 			</div>
 
-			<form id="profile" method="POST" action="">
+			<form id="profile" method="POST" action="{% url 'apis:user-update' %}">
+                {% csrf_token %}
 				<label for="name">Имя:</label>
 				<input type="text" name="name" value="{{ request.session.username }}" autocomplete="off" required>
 
 				<input type="submit" name="profile" value="Сохранить">
-			</form>-->
+			</form>
 		</div>
 
 		<div class="push"></div>
