@@ -15,7 +15,7 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
         fields = '__all__'
         # fields = ['Title', 'Description', 'Status']
-        read_only = ['pk']
+        # read_only = ['pk']
 
 
 class UserCourseSerializer(serializers.ModelSerializer):
@@ -23,6 +23,12 @@ class UserCourseSerializer(serializers.ModelSerializer):
         model = UserCourse
         # fields = '__all__'
         fields = ['course', 'user', 'Action']
+
+class ModuleSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Module
+            fields = '__all__'
+
 
 
 

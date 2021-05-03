@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import User, UserCourse, Course
+from .models import User, UserCourse, Course, Module
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
-from .serializers import UserSerializer, CourseSerializer, UserCourseSerializer
+from .serializers import UserSerializer, CourseSerializer, UserCourseSerializer, ModuleSerializer
 
 
 @api_view(['GET'])
@@ -193,3 +193,13 @@ def Logout(request):
         pass
     response = redirect('index')
     return response
+
+
+@api_view(['GET'])
+def modules(request, course_id):
+    try:
+        modules = Module.objects.filter(course_id=course_id)
+        ser = ModuleSerializer(instance=modules, many=True)
+        return Response(ser.data)
+    except Exception as e:
+        return Response(Http404)

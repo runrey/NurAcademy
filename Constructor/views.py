@@ -1,7 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
-from .forms import NewCourseForm
-from .models import Course,UserCourse, User
+from .forms import NewCourseForm, ModulesForm
+from .models import Course,UserCourse, User, Module
+import requests
+
+
 def mainPage(request):
     try:
         mail = request.session['email']
@@ -27,15 +30,26 @@ def newCourse(request):
 
 def updateMyCourse(request, course_id):
     try:
-        course = Course.objects.get(id=course_id, usercourse__user__Email=request.session['email'], usercourse__Action=True)
+        course = Course.objects.get(id=course_id)
+        check = UserCourse.objects.get(user__Email=request.session['email'], course_id=course_id, Action=True)
+        url = 'http://127.0.0.1:8000/api/course-modules/' + course_id
+        modules = requests.get(url=url).json()
+        forms = []
+        for module in modules:
+            forms.append(ModulesForm(initial={'Module_title': module['Module_title'], 'Content': module['Content']}))
+
     except Exception as e:
+        print(e)
         return HttpResponse("It is none of your bussiness")
 
     data = course.__dict__
     form = NewCourseForm(initial=data)
+
     context = {
         'form': form,
-        'course_id': course.id
+        'course_id': course.id,
+        'forms': forms,
     }
+
     return render(request=request,template_name='constructor/updatecourse.html', context=context)
 

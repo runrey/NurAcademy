@@ -23,4 +23,6 @@ urlpatterns = [
 
     path('login/', views.Login, name='login'),
     path('logout/', views.Logout, name='logout'),
+
+    path('course-modules/<str:course_id>', views.modules, name='modules'),
 ]
