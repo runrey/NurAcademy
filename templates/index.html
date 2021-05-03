@@ -34,8 +34,8 @@
 
                 <div class="header-mobile-right">
                      {% if request.session.email == null %}
-						<a class="mlinks" href="login">Login</a>
-						<a class="mlinks" href="sign">Signup</a>
+						<a class="mlinks" href="{% url 'login' %}">Login</a>
+						<a class="mlinks" href="{% url 'sign' %}">Signup</a>
                     {% endif %}
                     {% if request.session.email != null %}
                         <a class="mlinks">{{ request.session.username }}</a>
@@ -49,7 +49,7 @@
 
 				<div class="header-normal-right" data-aos="zoom-in-left" data-aos-delay="600" data-aos-duration="1000">
                         {% if request.session.email == null %}
-						<div class="header-normal-right-back"><a id="subs" href="login">Войти</a></div>
+						<div class="header-normal-right-back"><a id="subs" href="{% url 'login' %}">Войти</a></div>
                         {% endif %}
                         {% if request.session.email != null %}
                         <div class="menu-login">{{ request.session.username }}<i class="fa fa-sign-in" aria-hidden="true"></i></div>
@@ -100,7 +100,7 @@
 		    					<span id="courses-price">5 000 &#8376;</span>
 									<a href="courses">Перейти к курсу</a>
                                     {% if request.session.email == null %}
-									<a href="login" name="purchase">Купить</a>
+									<a href="{% url 'login' %}" name="purchase">Купить</a>
                                     {% endif %}
                                     {% if request.session.email != null %}
                                         <a href="purchase?course=id" name="purchase">Купить</a>
