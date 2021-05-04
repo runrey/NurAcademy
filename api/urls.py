@@ -15,7 +15,7 @@ urlpatterns = [
     path('user-create/', views.UserCreate, name='user-create'),
     path('course-create/', views.CourseCreate, name='course-create'),
 
-    path('user-update/<str:pk>', views.UserUpdate, name='user-update'),
+    path('user-update/<str:email>', views.UserUpdate, name='user-update'),
     path('course-update/<str:pk>', views.CourseUpdate, name='course-update'),
 
     path('user-delete/<str:pk>', views.UserDelete, name='user-delete'),

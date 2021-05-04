@@ -99,13 +99,13 @@ def CourseCreate(request):
 
 
 @api_view(['POST'])
-def UserUpdate(request, pk):
+def UserUpdate(request, email):
     try:
         mail = request.session['email']
-        if mail is None or mail != request.email:
+        if mail is None or mail != email:
             raise Exception
 
-        user = User.objects.get(id=pk)
+        user = User.objects.get(Email=email)
         serializer = UserSerializer(instance=user, data=request.data)
         ans = False
         if serializer.is_valid():
