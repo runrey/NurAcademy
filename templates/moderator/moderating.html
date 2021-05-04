@@ -1,0 +1,71 @@
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderator:</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'courses/css/moderating.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    
+    <header class="header">
+        <div class="container">
+            <div class="topnav" id="myTopnav">
+                <a href="#courses" class="active">Courses</a>
+                <a href="#home">Homepage</a>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                  <i class="fa fa-bars"></i>
+                </a>
+              </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <h1>Courses</h1>
+            <button class="accordion"><h3>Title: </h3>Java Developer <h3>Author:</h3> Alikhan</button>
+                <div class="panel">
+                    <h3 style="color: #E55F5F;margin: 10px 0;">Description: </h3>
+                    <p>Vivamus vulputate, ligula ultricies hendrerit malesuada, nisi erat hendrerit ex, a imperdiet libero arcu ut tortor. Etiam tincidunt, mi varius aliquam lacinia, massa urna porta ex, pretium accumsan nisl odio ut ligula. Praesent vulputate facilisis leo, non egestas velit condimentum at. Duis sed lectus quis erat aliquam vulputate. Suspendisse eget felis a justo consequat malesuada. Aenean maximus viverra ex, ut interdum risus faucibus quis. Integer eget purus libero. Aenean efficitur risus sed sapien ornare elementum. Fusce congue eros libero, vel imperdiet eros elementum vitae. Maecenas mattis, dui in rhoncus cursus, lacus nisl bibendum diam, et viverra lectus mi in sem. Donec malesuada malesuada urna, bibendum rhoncus leo aliquet eget. Nulla hendrerit, turpis at ullamcorper bibendum, orci leo rhoncus justo, quis mattis tortor velit eu tortor. Quisque porta eget elit blandit feugiat. Curabitur dapibus, sem non hendrerit ultricies, turpis purus gravida sapien, ut tincidunt turpis nulla id magna. Pellentesque bibendum molestie luctus. Fusce ullamcorper egestas placerat.</p>
+                    <div class="button__items">
+                        <input class="decline__btn" type="submit" value="decline">
+                        <input class="revision__btn" type="submit" value="send for revision">
+                        <input class="accept__btn" type="submit" value="accept">
+                    </div>
+                </div>
+        </div>
+
+        
+    </section>
+
+    <script>
+        function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+            }
+        }
+
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight){
+            panel.style.maxHeight = null;
+            } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+        }
+    </script>
+</body>
+</html>
