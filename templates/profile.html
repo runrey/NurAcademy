@@ -30,6 +30,13 @@
 		
 		<div class="content" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
 			<h1>Мой профиль</h1>
+            <form method="POST" action="{% url 'apis:user-update' email %}">
+                {% csrf_token %}
+                {{ form }}
+				<input type="submit" name="profile" value="Сохранить">
+			</form>
+
+			<!--<div class="links">
 			<table>
 				<tr>
 					<th>Имя пользователя:</th>
@@ -43,15 +50,8 @@
 			<div class="links">
 				<span class="link" onclick="profile()">Редактировать профиль</span>
 				<a class="link" href="passchange">Сменить пароль</a>
-			</div>
+			</div>-->
 
-			<form id="profile" method="POST" action="{% url 'apis:user-update' %}">
-                {% csrf_token %}
-				<label for="name">Имя:</label>
-				<input type="text" name="name" value="{{ request.session.username }}" autocomplete="off" required>
-
-				<input type="submit" name="profile" value="Сохранить">
-			</form>
 		</div>
 
 		<div class="push"></div>
