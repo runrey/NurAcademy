@@ -15,13 +15,14 @@
     </style>
 </head>
 <body>
-	<form data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000" id="login" method="POST" action="{% url "apis:course-update" course_id%} ">
+	<form data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000" id="login" method="POST" action="{% url "apis:course-update" course_id%}">
         {% csrf_token %}
         {{ form }}
-
-        {% for fm in forms %}
-            {{ fm }}
-        {% endfor %}
+        {% if forms.count != 0 %}
+            {% for fm in forms %}
+                {{ fm }}
+            {% endfor %}
+        {% endif %}
         <input type="submit" name="submit" value="Update">
 	</form>
 

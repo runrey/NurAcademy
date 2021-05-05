@@ -8,6 +8,7 @@ urlpatterns = [
 
     path('user-list/', views.UserList, name='user-list'),
     path('course-list/', views.CourseList, name='course-list'),
+    path('inactive-courses/', views.InactiveCourseList, name='inactive'),
 
     path('user-detail/<str:pk>', views.UserDetail, name='user-detail'),
     path('course-detail/<str:pk>', views.CourseDetail, name='course-detail'),

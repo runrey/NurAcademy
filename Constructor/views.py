@@ -44,7 +44,9 @@ def updateMyCourse(request, course_id):
 
     data = course.__dict__
     form = NewCourseForm(initial=data)
+    # return HttpResponse(forms)
 
+    print(forms)
     context = {
         'form': form,
         'course_id': course.id,

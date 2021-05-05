@@ -45,6 +45,17 @@ def CourseList(request):
     except Exception as e:
         return HttpResponse(Http404("Poll does not exist"))
 
+@api_view(['GET'])
+def InactiveCourseList(request):
+    try:
+        courses = Course.objects.filter(Status='IA')
+        # users = User.objects.prefetch_related('usercourse_set__course')
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        print(e)
+        return HttpResponse(Http404("Poll does not exist"))
+
 
 @api_view(['GET'])
 def UserDetail(request, pk):
@@ -187,8 +198,8 @@ def Login(request):
 @api_view(['GET'])
 def Logout(request):
     try:
-        del request.session['email']
-        del request.session['username']
+        request.session['email'] = None
+        request.session['username'] = None
     except KeyError:
         pass
     response = redirect('index')
