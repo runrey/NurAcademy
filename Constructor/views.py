@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
-from .forms import NewCourseForm, ModulesForm
+from .forms import CourseForm, ModuleForm
 from .models import Course,UserCourse, User, Module
 import requests
 
@@ -10,7 +10,7 @@ def mainPage(request):
         mail = request.session['email']
         if mail is None:
             raise Exception
-        courses = Course.objects.filter(usercourse__user__Email=mail)
+        courses = Course.objects.filter(usercourse__user__Email=mail, usercourse__Action=True)
         context = {
             'courses': courses,
         }
@@ -21,7 +21,7 @@ def mainPage(request):
 
 
 def newCourse(request):
-    form = NewCourseForm()
+    form = CourseForm()
     context = {
         'form': form,
     }
@@ -36,14 +36,14 @@ def updateMyCourse(request, course_id):
         modules = requests.get(url=url).json()
         forms = []
         for module in modules:
-            forms.append(ModulesForm(initial={'Module_title': module['Module_title'], 'Content': module['Content']}))
+            forms.append(ModuleForm(initial={'Module_title': module['Module_title'], 'Content': module['Content']}))
 
     except Exception as e:
         print(e)
         return HttpResponse("It is none of your bussiness")
 
     data = course.__dict__
-    form = NewCourseForm(initial=data)
+    form = CourseForm(initial=data)
 
     context = {
         'form': form,

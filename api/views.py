@@ -45,6 +45,17 @@ def CourseList(request):
     except Exception as e:
         return HttpResponse(Http404("Poll does not exist"))
 
+@api_view(['GET'])
+def InactiveCourseList(request):
+    try:
+        courses = Course.objects.filter(Status='IA')#.prefetch_related('usercourse_set__user')
+        # users = User.objects.prefetch_related('usercourse_set__course')
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        print(e)
+        return HttpResponse(Http404("Poll does not exist"))
+
 
 @api_view(['GET'])
 def UserDetail(request, pk):
@@ -60,6 +71,15 @@ def CourseDetail(request, pk):
     try:
         courses = Course.objects.get(id=pk)
         serializer = CourseSerializer(courses, many=False)
+        return Response(serializer.data)
+    except Exception as e:
+        return Response(Http404)
+
+@api_view(['GET'])
+def ModuleDetail(request, pk):
+    try:
+        module = Module.objects.get(id=pk)
+        serializer = ModuleSerializer(module, many=False)
         return Response(serializer.data)
     except Exception as e:
         return Response(Http404)
@@ -97,9 +117,22 @@ def CourseCreate(request):
     except Exception as e:
         return HttpResponse("You must be logged in first")
 
+@api_view(['POST'])
+def ModuleCreate(request):
+    try:
+
+        cserializer = ModuleSerializer(data=request.data)
+        if cserializer.is_valid():
+            cserializer.save()
+
+        return HttpResponse(ans)
+    except Exception as e:
+        return HttpResponse("You must be logged in first")
+
 
 @api_view(['POST'])
 def UserUpdate(request, email):
+
     try:
         mail = request.session['email']
         if mail is None or mail != email:
@@ -119,21 +152,32 @@ def UserUpdate(request, email):
 
 @api_view(['POST'])
 def CourseUpdate(request, pk):
-    try:
-        mail = request.session['email']
-        if mail is None:
-            raise Exception
+    return Response(request.data)
+    # try:
+    #     mail = request.session['email']
+    #     if mail is None:
+    #         raise Exception
+    #
+    #     course = Course.objects.get(id=pk)
+    #     serializer = CourseSerializer(instance=course, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return HttpResponse(True)
+    #     return HttpResponse(False)
+    # except Exception as e:
+    #     return HttpResponse("You must be logged in first")
 
-        course = Course.objects.get(id=pk)
-        serializer = CourseSerializer(instance=course, data=request.data)
+@api_view(['POST'])
+def ModuleUpdate(request, pk):
+    try:
+        module = Module.objects.get(id=pk)
+        serializer = ModuleSerializer(instance=course, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return HttpResponse(True)
         return HttpResponse(False)
     except Exception as e:
         return HttpResponse("You must be logged in first")
-
-
 
 
 @api_view(['DELETE'])
@@ -167,6 +211,15 @@ def CourseDelete(request, pk):
     except Exception as e:
         return Response(Http404)
 
+@api_view(['DELETE'])
+def ModuleDelete(request, pk):
+    try:
+        module = Module.objects.get(id=pk)
+        module.delete()
+        return Response(True)
+    except Exception as e:
+        return Response(False)
+
 
 @api_view(['POST'])
 def Login(request):
@@ -187,8 +240,8 @@ def Login(request):
 @api_view(['GET'])
 def Logout(request):
     try:
-        del request.session['email']
-        del request.session['username']
+        request.session['email'] = None
+        request.session['username'] = None
     except KeyError:
         pass
     response = redirect('index')
@@ -203,3 +256,6 @@ def modules(request, course_id):
         return Response(ser.data)
     except Exception as e:
         return Response(Http404)
+    finally:
+        pass
+
