@@ -41,3 +41,7 @@ class Module(models.Model):
     def __str__(self):
         return self.Module_title
 
+#
+# class UsersManager(models.Manager):
+#     pass
+
