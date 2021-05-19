@@ -24,3 +24,6 @@ def profile(request):
     }
     return render(request, template_name='profile.html', context=context)
 
+def my_courses(request):
+    return render(request, template_name='my_courses.html')
+
