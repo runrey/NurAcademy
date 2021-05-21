@@ -40,7 +40,7 @@
                     {% if request.session.email != null %}
                         <a class="mlinks">{{ request.session.username }}</a>
 						<a class="mlinks" href="{% url 'profile' %}">Мой профиль</a>
-						<a class="mlinks" href="courses">Мои курсы</a>
+						<a class="mlinks" href="{% url 'my_courses' %}">Мои курсы</a>
 						<a class="mlinks" href="{% url 'apis:logout' %}">Выйти</a>
                 {% endif %}
 				</div>

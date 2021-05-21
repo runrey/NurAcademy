@@ -19,8 +19,8 @@
 				<span class="header-normal-logo" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000"><a href="{% url 'index' %}" title="Go to home:)">Logo</a></span>
 				<div class="header-mobile-right">
 					<a>Ник</a>
-					<a href="profile">Мой профиль</a>
-					<a href="courses">Мои курсы</a>
+					<a href="{% url 'profile' %}">Мой профиль</a>
+					<a href="{% url 'my_courses' %}">Мои курсы</a>
 					<a href="{% url 'apis:logout' %}">Выйти</a>
 				</div>
 				<div class="menu-login"><i class="fa fa-sign-in" aria-hidden="true"></i></div>
@@ -29,24 +29,36 @@
 
 		<div class="content" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
 			<h1>Мои курсы</h1>
-            <!--<form method="POST" action="">
-                {% csrf_token %}
-                {{ form }}
-				<input type="submit" name="profile" value="Сохранить">
-			</form>-->
-
-			<div class="links">
+            <h3><b>Авторство:</b></h3>
+            {% if courses == 0 %}
+                <h4>Здесь пока нет курсов, но вы можете создать их <a href="{% url 'constructor:mainPage' %}" style="text-decoration: underline; color: #0A246A">здесь</a>. </h4>
+            {% endif %}
+            {% if courses != 0 %}
 			<table>
+                {% for course in courses %}
 				<tr>
-					<th>Имя пользователя:</th>
-					<td>{{ request.session.username }}</td>
+					<th>{{ course.Title }}</th>
+                    <td><a href="course" style="padding: 2px 4px; border: 1px solid black; background-color: yellowgreen; border-radius: 5px">В курс</a></td>
 				</tr>
-				<tr>
-					<th>Email:</th>
-					<td>{{ request.session.email }}</td>
-				</tr>
+				 {% endfor %}
 			</table>
+            {% endif %}
+            <br>
 
+            <h3><b>Приобретенные:</b></h3>
+            {% if courses_2 == 0 %}
+                <h4>Здесь пока нет курсов, но вы можете приобрести их <a href="courses" style="text-decoration: underline; color: #0A246A">здесь</a>. </h4>
+            {% endif %}
+            {% if courses_2 != 0 %}
+            <table>
+                {% for course in courses_2 %}
+				<tr>
+					<th>{{ course_2.Title }}</th>
+                    <td><a href="course" style="padding: 2px 4px; border: 1px solid black; background-color: yellowgreen; border-radius: 5px">В курс</a></td>
+				</tr>
+				 {% endfor %}
+			</table>
+            {% endif %}
 		</div>
 
 		<div class="push"></div>

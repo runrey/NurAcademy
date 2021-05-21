@@ -20,8 +20,8 @@
 				<span class="header-normal-logo" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000"><a href="{% url 'index' %}" title="Go to home:)">Logo</a></span>
 				<div class="header-mobile-right">
 					<a>Ник</a>
-					<a href="profile">Мой профиль</a>
-					<a href="courses">Мои курсы</a>
+					<a href="{% url 'profile' %}">Мой профиль</a>
+					<a href="{% url 'my_courses' %}">Мои курсы</a>
 					<a href="{% url 'apis:logout' %}">Выйти</a>
 				</div>
 				<div class="menu-login"><i class="fa fa-sign-in" aria-hidden="true"></i></div>
