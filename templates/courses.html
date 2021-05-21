@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <title>Мой профиль</title>
+    <title>Курсы</title>
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,33 +28,22 @@
 		</header>
 
 		<div class="content" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
-			<h1>Мои курсы</h1>
-            <h3><b>Авторство:</b></h3>
+			<h1>Каталог курсов</h1>
             {% if courses == 0 %}
                 <h4>Здесь пока нет курсов, но вы можете создать их <a href="{% url 'constructor:mainPage' %}" style="text-decoration: underline; color: #0A246A">здесь</a>. </h4>
             {% endif %}
             {% if courses != 0 %}
 			<table>
+                <tr>
+					<th>Название курса:</th>
+                    <th>Автор курса:</th>
+                    <th></th>
+				</tr>
                 {% for course in courses %}
 				<tr>
-					<th>{{ course.Title }}</th>
-                    <td><a href="course" style="padding: 2px 4px; border: 1px solid black; background-color: yellowgreen; border-radius: 5px">В курс</a></td>
-				</tr>
-				 {% endfor %}
-			</table>
-            {% endif %}
-            <br>
-
-            <h3><b>Приобретенные:</b></h3>
-            {% if courses_2 == 0 %}
-                <h4>Здесь пока нет курсов, но вы можете приобрести их <a href="courses" style="text-decoration: underline; color: #0A246A">здесь</a>. </h4>
-            {% endif %}
-            {% if courses_2 != 0 %}
-            <table>
-                {% for course_2 in courses_2 %}
-				<tr>
-					<th>{{ course_2.Title }}</th>
-                    <td><a href="course" style="padding: 2px 4px; border: 1px solid black; background-color: yellowgreen; border-radius: 5px">В курс</a></td>
+					<td>{{ course.Title }}</td>
+                    <td>{{ course.User.Email }}</td>
+                    <td><a href="course" style="padding: 2px 4px; border: 1px solid black; background-color: yellowgreen; border-radius: 5px">Купить</a></td>
 				</tr>
 				 {% endfor %}
 			</table>

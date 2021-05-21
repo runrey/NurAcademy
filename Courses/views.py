@@ -52,3 +52,16 @@ def my_courses(request):
         }
 
     return render(request=request, template_name='my_courses.html', context=context)
+
+def courses(request):
+    courses = Course.objects.all()
+    if len(courses) > 0:
+        context = {
+            'courses': courses,
+        }
+    else:
+        context = {
+            'courses': 0,
+        }
+
+    return render(request=request, template_name='courses.html', context=context)
