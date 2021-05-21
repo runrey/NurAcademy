@@ -2,14 +2,17 @@ from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from .forms import CourseForm, ModuleForm
 from .models import Course,UserCourse, User, Module
+from django.forms import modelformset_factory, HiddenInput
 import requests
 
+ModuleFormSet = modelformset_factory(Module, fields=('Module_title', 'Content', 'course'))
 
 def mainPage(request):
     try:
         mail = request.session['email']
         if mail is None:
             raise Exception
+
         courses = Course.objects.filter(usercourse__user__Email=mail, usercourse__Action=True)
         context = {
             'courses': courses,
@@ -22,6 +25,7 @@ def mainPage(request):
 
 def newCourse(request):
     form = CourseForm()
+
     context = {
         'form': form,
     }
@@ -29,27 +33,32 @@ def newCourse(request):
 
 
 def updateMyCourse(request, course_id):
-    try:
-        course = Course.objects.get(id=course_id)
-        check = UserCourse.objects.get(user__Email=request.session['email'], course_id=course_id, Action=True)
-        url = 'http://127.0.0.1:8000/api/course-modules/' + course_id
-        modules = requests.get(url=url).json()
-        forms = []
-        for module in modules:
-            forms.append(ModuleForm(initial={'Module_title': module['Module_title'], 'Content': module['Content']}))
 
+    try:
+        if request.method == 'POST':
+            formset = ModuleFormSet(request.POST)
+            if formset.is_valid():
+                formset.save()
+    except Exception as e:
+        pass
+
+    try:
+        formset = ModuleFormSet(queryset=Module.objects.filter(course_id=course_id))
+        course = Course.objects.get(id=course_id)
+
+        for form in formset:
+            form.fields['course'].widget = HiddenInput()
+            form.fields['course'].initial = course_id
+
+        context = {
+            'course': course,
+            'forms': formset,
+        }
+
+        return render(request=request,template_name='constructor/updatecourse.html', context=context)
     except Exception as e:
         print(e)
         return HttpResponse("It is none of your bussiness")
 
-    data = course.__dict__
-    form = CourseForm(initial=data)
-
-    context = {
-        'form': form,
-        'course_id': course.id,
-        'forms': forms,
-    }
-
-    return render(request=request,template_name='constructor/updatecourse.html', context=context)
-
+def test(request):
+    pass

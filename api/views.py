@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.forms import modelformset_factory
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import User, UserCourse, Course, Module
 
@@ -152,26 +152,13 @@ def UserUpdate(request, email):
 
 @api_view(['POST'])
 def CourseUpdate(request, pk):
-    return Response(request.data)
-    # try:
-    #     mail = request.session['email']
-    #     if mail is None:
-    #         raise Exception
-    #
-    #     course = Course.objects.get(id=pk)
-    #     serializer = CourseSerializer(instance=course, data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return HttpResponse(True)
-    #     return HttpResponse(False)
-    # except Exception as e:
-    #     return HttpResponse("You must be logged in first")
-
-@api_view(['POST'])
-def ModuleUpdate(request, pk):
     try:
-        module = Module.objects.get(id=pk)
-        serializer = ModuleSerializer(instance=course, data=request.data)
+        mail = request.session['email']
+        if mail is None:
+            raise Exception
+
+        course = Course.objects.get(id=pk)
+        serializer = CourseSerializer(instance=course, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return HttpResponse(True)
@@ -179,6 +166,30 @@ def ModuleUpdate(request, pk):
     except Exception as e:
         return HttpResponse("You must be logged in first")
 
+@api_view(['POST'])
+def ModuleUpdate(request):
+    try:
+        module = Module.objects.get(id=request.data.id)
+        serializer = ModuleSerializer(instance=module, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponse(True)
+        return HttpResponse(False)
+    except Exception as e:
+        return HttpResponse("You must be logged in first")
+
+@api_view(['POST'])
+def ModuleSaveMany(request):
+    try:
+        ModuleFormSet = modelformset_factory(Module, fields=('Module_title', 'Content', 'course'))
+        formset = ModuleFormSet(request.POST)
+        if formset.is_valid():
+            formset.save()
+            return HttpResponse('saved')
+        return HttpResponse('Not saved')
+    except Exception as e:
+        print(e)
+        return HttpResponse("Something went wrong", e)
 
 @api_view(['DELETE'])
 def UserDelete(request, pk):
