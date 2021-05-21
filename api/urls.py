@@ -21,11 +21,13 @@ urlpatterns = [
 
     path('user-update/<str:email>', views.UserUpdate, name='user-update'),
     path('course-update/<str:pk>', views.CourseUpdate, name='course-update'),
-    path('module-update/<str:pk>', views.ModuleUpdate, name='module-update'),
+    path('module-update/', views.ModuleUpdate, name='module-update'),
 
     path('user-delete/<str:pk>', views.UserDelete, name='user-delete'),
     path('course-delete/<str:pk>', views.CourseDelete, name='course-delete'),
     path('module-delete/<str:pk>', views.ModuleDelete, name='module-delete'),
+
+    path('module-save', views.ModuleSaveMany, name='module-save'),
 
     path('login/', views.Login, name='login'),
     path('logout/', views.Logout, name='logout'),
