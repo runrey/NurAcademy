@@ -1,16 +1,17 @@
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from .forms import CourseForm, ModuleForm
-from .models import Course,UserCourse, User, Module
+from .models import Course, UserCourse, User, Module
 from django.forms import modelformset_factory, HiddenInput
 import requests
 
 ModuleFormSet = modelformset_factory(Module, fields=('Module_title', 'Content', 'course'))
 
+
 def mainPage(request):
     try:
         mail = request.session['email']
-        if mail is None:
+        if len(request.session['email']) <= 0:
             raise Exception
 
         courses = Course.objects.filter(usercourse__user__Email=mail, usercourse__Action=True)
@@ -33,7 +34,6 @@ def newCourse(request):
 
 
 def updateMyCourse(request, course_id):
-
     try:
         if request.method == 'POST':
             formset = ModuleFormSet(request.POST)
@@ -55,10 +55,11 @@ def updateMyCourse(request, course_id):
             'forms': formset,
         }
 
-        return render(request=request,template_name='constructor/updatecourse.html', context=context)
+        return render(request=request, template_name='constructor/updatecourse.html', context=context)
     except Exception as e:
         print(e)
         return HttpResponse("It is none of your bussiness")
+
 
 def test(request):
     pass

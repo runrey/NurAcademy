@@ -33,21 +33,22 @@
                 <h4>Здесь пока нет курсов, но вы можете создать их <a href="{% url 'constructor:mainPage' %}" style="text-decoration: underline; color: #0A246A">здесь</a>. </h4>
             {% endif %}
             {% if courses != 0 %}
-			<table>
-                <tr>
-					<th>Название курса:</th>
-                    <th>Автор курса:</th>
-                    <th></th>
-				</tr>
-                {% for course in courses %}
-				<tr>
-					<td>{{ course.Title }}</td>
-                    <td>{{ course.User.Email }}</td>
-                    <td><a href="course" style="padding: 2px 4px; border: 1px solid black; background-color: yellowgreen; border-radius: 5px">Купить</a></td>
-				</tr>
-				 {% endfor %}
-			</table>
+                <table>
+                    <tr>
+					    <th>Название курса:</th>
+                        <th></th>
+				    </tr>
+                    {% for course in courses %}
+				    <tr>
+					    <td>{{ course.Title }}</td>
+                        <td><a href="{% url 'apis:user-course-create' course.id %}" style="margin: 0; padding: 2px 4px; border: 1px solid black; background-color: yellowgreen; border-radius: 5px">Купить</a></td>
+				    </tr>
+
+				    {% endfor %}
+			    </table>
             {% endif %}
+            </form>
+
 		</div>
 
 		<div class="push"></div>

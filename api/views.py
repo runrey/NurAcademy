@@ -113,7 +113,7 @@ def CourseCreate(request):
 
         usercourse = UserCourse(user_id=m.pk, course_id=cserializer.data['id'], Action=True)
         usercourse.save()
-        return HttpResponse(ans)
+        return redirect('my_courses')
     except Exception as e:
         return HttpResponse("You must be logged in first")
 
@@ -125,7 +125,7 @@ def ModuleCreate(request):
         if cserializer.is_valid():
             cserializer.save()
 
-        return HttpResponse(ans)
+        return HttpResponse(True)
     except Exception as e:
         return HttpResponse("You must be logged in first")
 
@@ -239,6 +239,7 @@ def Login(request):
         if m.Password == request.POST['pass']:
             request.session['email'] = m.Email
             request.session['username'] = m.Username
+            request.session['user_id'] = m.id
             response = redirect('index')
             return response
         else:
@@ -270,3 +271,15 @@ def modules(request, course_id):
     finally:
         pass
 
+@api_view(['GET'])
+def UserCourseCreate(request, course_id):
+    try:
+        mail = request.session['email']
+        if len(mail) <= 0:
+            raise Exception
+
+        usercourse = UserCourse(user_id=request.session['user_id'], course_id=course_id)
+        usercourse.save()
+        return redirect('my_courses')
+    except Exception as e:
+        return HttpResponse("You must be logged in first")

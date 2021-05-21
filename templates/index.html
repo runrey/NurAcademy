@@ -98,12 +98,11 @@
 		    				</div>
 		    				<div id="courses-bottom">
 		    					<span id="courses-price">5 000 &#8376;</span>
-									<a href="courses">Перейти к курсу</a>
                                     {% if request.session.email == null %}
-									<a href="{% url 'login' %}" name="purchase">Купить</a>
+									    <a href="{% url 'login' %}">Перейти к каталогу</a>
                                     {% endif %}
                                     {% if request.session.email != null %}
-                                        <a href="purchase?course=id" name="purchase">Купить</a>
+                                        <a href="{% url 'courses' %}">Перейти к каталогу</a>
                                     {% endif %}
 		    				</div>    					
 		    			</div>

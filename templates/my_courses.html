@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <title>Мой профиль</title>
+    <title>Мои курсы</title>
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -47,7 +47,7 @@
 
             <h3><b>Приобретенные:</b></h3>
             {% if courses_2 == 0 %}
-                <h4>Здесь пока нет курсов, но вы можете приобрести их <a href="courses" style="text-decoration: underline; color: #0A246A">здесь</a>. </h4>
+                <h4>Здесь пока нет курсов, но вы можете приобрести их <a href="{% url 'courses' %}" style="text-decoration: underline; color: #0A246A">здесь</a>. </h4>
             {% endif %}
             {% if courses_2 != 0 %}
             <table>

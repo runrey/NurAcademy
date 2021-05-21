@@ -32,4 +32,8 @@ urlpatterns = [
     path('login/', views.Login, name='login'),
     path('logout/', views.Logout, name='logout'),
 
+    path('userCourseCreate/<str:course_id>', views.UserCourseCreate, name='user-course-create'),
+
+
+
 ]
