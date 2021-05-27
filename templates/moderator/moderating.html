@@ -27,9 +27,9 @@
     <section>
     <div class="container">
             <h1>Courses</h1>
-        {% for course in courses %}
+        {% for course, username in courses.items %}
             <hr>
-            <button class="accordion"><h3>Title: </h3>{{ course.Title }} <h3>Author:</h3> Alikhan</button>
+            <button class="accordion"><h3>Title: </h3>{{ course.Title }} <h3>Author:</h3> {{ username }}</button>
                 <div class="panel">
                     <h3 style="color: #E55F5F;margin: 10px 0;">Description: </h3>
                     <p>{{ course.Description }}</p>
